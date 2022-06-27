@@ -1,4 +1,5 @@
 import { SERVER_URL } from "../../data/variables";
+import axios from "axios";
 
 import {
   USER_REGISTER_FAIL,
@@ -17,7 +18,7 @@ export const register = (username, email, password) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `${SERVER_URL}/user/register`,
+      `${SERVER_URL}/api/users/register`,
       {
         username,
         email,
@@ -33,9 +34,9 @@ export const register = (username, email, password) => async (dispatch) => {
     dispatch({
       type: USER_REGISTER_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+        error?.response && error.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message,
     });
   }
 };

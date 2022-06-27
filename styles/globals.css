@@ -11,6 +11,15 @@ a {
   text-decoration: none;
 }
 
+a.decorate {
+  text-decoration: underline;
+  color: blue;
+}
+
+.sr-only {
+  opacity: 0;
+}
+
 * {
   box-sizing: border-box;
 }

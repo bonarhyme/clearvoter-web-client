@@ -12,9 +12,7 @@ import Link from "next/link";
 
 const Layout = ({ children }) => {
   // const { userInfo } = useSelector((state) => state.userLogin);
-  const userInfo = {
-    username: "bonarhyme",
-  };
+  const userInfo = null;
 
   return (
     <>
@@ -24,7 +22,6 @@ const Layout = ({ children }) => {
         expand="lg"
         collapseOnSelect
         fixed="top"
-        id="rem-pad"
         className="bg-black"
       >
         <Container>
@@ -77,6 +74,7 @@ const Layout = ({ children }) => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      <div className="mt-5 pt-5">{children}</div>
     </>
   );
 };
