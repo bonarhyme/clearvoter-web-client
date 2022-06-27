@@ -6,13 +6,13 @@ import {
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-// import {
-//   userRegisterReducer,
-//   userLoginReducer,
-// } from "./reducers/userReducers";
+import {
+  userRegisterReducer,
+  // userLoginReducer,
+} from "./reducers/userReducers";
 
 const reducer = combineReducers({
-  // registerUser: userRegisterReducer,
+  registerUser: userRegisterReducer,
 });
 
 // Local storage matters
