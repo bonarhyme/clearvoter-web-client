@@ -9,7 +9,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import {
   userRegisterReducer,
   // userLoginReducer,
-} from "./reducers/userReducers";
+} from "./reducers/user.reducers";
 
 const reducer = combineReducers({
   registerUser: userRegisterReducer,
