@@ -1,34 +1,23 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ClearVoter Web Frontend
 
-## Getting Started
+ClearVoter is an electronic voting (e-voting) platform that allows individuals or brands create polls in order to get the choice, opinion, or will on a question; from a target audience or a group of persons.
 
-First, run the development server:
+ClearVoter allows users or poll creators restrict the votes to a particular location or region.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+ClearVoters also allows users or poll creators decide the requirements for voting e.g valid emails, phone number or IP addresses.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Clear Voter uses a number of APIs to detect if the voter's email, phone number or IP address is valid.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Usage
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+To get started with ClearVoter, visit [clearvoter.vercel.app](https://clearvoter.vercel.app)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Contributing
 
-## Learn More
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-To learn more about Next.js, take a look at the following resources:
+Please make sure to update tests as appropriate.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[MIT](https://choosealicense.com/licenses/mit/)
