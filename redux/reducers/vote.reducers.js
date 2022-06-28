@@ -6,6 +6,9 @@ import {
   GET_ALL_POLLS_FAIL,
   GET_ALL_POLLS_REQUEST,
   GET_ALL_POLLS_SUCCESS,
+  GET_SINGLE_POLL_FAIL,
+  GET_SINGLE_POLL_REQUEST,
+  GET_SINGLE_POLL_SUCCESS,
 } from "../constants/vote.constants";
 
 export const createPollReducer = (state = {}, action) => {
@@ -30,6 +33,21 @@ export const getAllPollsReducer = (state = {}, action) => {
     case GET_ALL_POLLS_SUCCESS:
       return { loading: false, success: true, pollInfo: action.payload };
     case GET_ALL_POLLS_FAIL:
+      return { loading: false, success: false, error: action.payload };
+    case USER_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const getSinglePollReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_SINGLE_POLL_REQUEST:
+      return { loading: true };
+    case GET_SINGLE_POLL_SUCCESS:
+      return { loading: false, success: true, pollInfo: action.payload };
+    case GET_SINGLE_POLL_FAIL:
       return { loading: false, success: false, error: action.payload };
     case USER_LOGOUT:
       return {};

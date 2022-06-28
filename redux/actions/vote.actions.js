@@ -7,6 +7,9 @@ import {
   GET_ALL_POLLS_REQUEST,
   GET_ALL_POLLS_SUCCESS,
   GET_ALL_POLLS_FAIL,
+  GET_SINGLE_POLL_REQUEST,
+  GET_SINGLE_POLL_SUCCESS,
+  GET_SINGLE_POLL_FAIL,
 } from "../constants/vote.constants";
 
 export const createPollAction =
@@ -76,6 +79,38 @@ export const getAllPollsAction = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_ALL_POLLS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getSinglePollAction = (slug) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_SINGLE_POLL_REQUEST,
+    });
+
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.get(
+      `${SERVER_URL}/api/polls/view-poll/${slug}`,
+
+      config
+    );
+    dispatch({
+      type: GET_SINGLE_POLL_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_SINGLE_POLL_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

@@ -4,8 +4,9 @@ import Link from "next/link";
 import { Card, CardGroup, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 import { getAllPollsAction } from "../redux/actions/vote.actions";
-import styles from "../styles/Home.module.css";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -39,6 +40,8 @@ export default function Home() {
           </h1>
         </header>
         <CardGroup>
+          {loadingAll && <Loader color="black" />}
+          {errorAll && <Message variant="danger">{errorAll}</Message>}
           {successAll &&
             pollInfoAll?.data.length > 0 &&
             pollInfoAll?.data.map((poll) => {
@@ -48,24 +51,22 @@ export default function Home() {
                 description,
                 expiration,
                 slug,
-                updatedAt,
+                createdAt,
+                _id,
               } = poll;
               return (
-                <Card>
+                <Card key={_id}>
                   <Card.Header>
                     <Card.Title>{title}</Card.Title>
                     <Card.Text>
                       Creator: {creator?.username} | Published:{" "}
-                      {new Date(updatedAt).toLocaleDateString()} | expires:{" "}
+                      {new Date(createdAt).toLocaleDateString()} | expires:{" "}
                       {new Date(expiration).toLocaleString()}
                     </Card.Text>
                   </Card.Header>
                   <Card.Body>
                     <Card.Text>
-                      {"Lorem ipsum dolor sit amet consectetur adipisicing elit. Id sapiente rem omnis quo sit nam odio tenetur ea accusantium nemo, distinctio sint aliquam reiciendis beatae debitis, earum eos mollitia pariatur! Lorem ipsum dolor sit amet consectetur adipisicing elit. Id sapiente rem omnis quo sit nam odio tenetur ea accusantium nemo, distinctio sint aliquam reiciendis beatae debitis, earum eos mollitia pariatur!".slice(
-                        0,
-                        255
-                      )}
+                      {description.slice(0, 255)}
                       ...
                     </Card.Text>
                   </Card.Body>

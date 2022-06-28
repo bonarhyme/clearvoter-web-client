@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Image,
@@ -13,30 +13,39 @@ import { logout } from "../redux/actions/user.actions";
 
 const Layout = ({ children }) => {
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state) => state.loginUser);
+  const [userInfo, setUserInfo] = useState({});
+  const { userInfo: userInfoReducer } = useSelector((state) => state.loginUser);
+
+  useEffect(() => {
+    if (userInfo) {
+      setUserInfo(userInfoReducer);
+    }
+  }, []);
 
   return (
     <>
-      <Navbar
-        bg="dark"
-        variant="dark"
-        expand="lg"
-        collapseOnSelect
-        fixed="top"
-        className="bg-black"
-      >
-        <Container>
+      <Container>
+        <Navbar
+          bg="dark"
+          variant="dark"
+          expand="lg"
+          collapseOnSelect
+          fixed="top"
+          className="bg-black px-5"
+        >
           <Navbar.Brand>
-            <Link href="/">
-              <Image
-                src="/logo.png"
-                width={176.2}
-                height={62.6}
-                style={{
-                  objectFit: "contain",
-                  cursor: "pointer",
-                }}
-              />
+            <Link href="/" passHref>
+              <a>
+                <Image
+                  src="/logo.png"
+                  width={176.2}
+                  height={62.6}
+                  style={{
+                    objectFit: "contain",
+                    cursor: "pointer",
+                  }}
+                />
+              </a>
             </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -50,12 +59,14 @@ const Layout = ({ children }) => {
               </Link>
             </Nav>
             <Nav>
-              {!userInfo ? (
+              {!userInfo && (
                 <Link href="/auth" passHref>
                   <Nav.Link>Login / Register</Nav.Link>
                 </Link>
-              ) : (
-                <ButtonGroup>
+              )}
+
+              {userInfo && (
+                <ButtonGroup style={{ maxWidth: "12rem" }}>
                   <Link href="/dashboard" passHref>
                     <Nav.Link className="btn btn-secondary text-white">
                       Dashboard
@@ -73,8 +84,8 @@ const Layout = ({ children }) => {
               )}
             </Nav>
           </Navbar.Collapse>
-        </Container>
-      </Navbar>
+        </Navbar>
+      </Container>
       <div className="mt-5 pt-5">{children}</div>
     </>
   );
