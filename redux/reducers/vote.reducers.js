@@ -3,6 +3,9 @@ import {
   CREATE_POLL_FAIL,
   CREATE_POLL_REQUEST,
   CREATE_POLL_SUCCESS,
+  END_POLL_FAIL,
+  END_POLL_REQUEST,
+  END_POLL_SUCCESS,
   GET_ALL_POLLS_FAIL,
   GET_ALL_POLLS_REQUEST,
   GET_ALL_POLLS_SUCCESS,
@@ -84,6 +87,21 @@ export const publishPollReducer = (state = {}, action) => {
     case PUBLISH_POLL_SUCCESS:
       return { loading: false, success: true, pollInfo: action.payload };
     case PUBLISH_POLL_FAIL:
+      return { loading: false, success: false, error: action.payload };
+    case USER_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const endPollReducer = (state = {}, action) => {
+  switch (action.type) {
+    case END_POLL_REQUEST:
+      return { loading: true };
+    case END_POLL_SUCCESS:
+      return { loading: false, success: true, pollInfo: action.payload };
+    case END_POLL_FAIL:
       return { loading: false, success: false, error: action.payload };
     case USER_LOGOUT:
       return {};

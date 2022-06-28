@@ -16,6 +16,9 @@ import {
   PUBLISH_POLL_REQUEST,
   PUBLISH_POLL_SUCCESS,
   PUBLISH_POLL_FAIL,
+  END_POLL_REQUEST,
+  END_POLL_SUCCESS,
+  END_POLL_FAIL,
 } from "../constants/vote.constants";
 
 export const createPollAction =
@@ -184,6 +187,42 @@ export const publishPollAction = (slug) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PUBLISH_POLL_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+export const endPollAction = (slug) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: END_POLL_REQUEST,
+    });
+
+    const {
+      loginUser: { userInfo },
+    } = getState();
+
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo?.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `${SERVER_URL}/api/polls/end-poll/${slug}`,
+      {},
+      config
+    );
+    dispatch({
+      type: END_POLL_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: END_POLL_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

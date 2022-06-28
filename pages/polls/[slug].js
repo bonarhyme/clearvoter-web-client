@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 import {
+  endPollAction,
   getSinglePollAction,
   publishPollAction,
 } from "../../redux/actions/vote.actions";
@@ -46,6 +47,13 @@ const Slug = () => {
     error: errorPublishPoll,
   } = useSelector((store) => store.pollPublish);
 
+  const {
+    loading: loadingEndPoll,
+    success: successEndPoll,
+    pollInfo: pollInfoEndPoll,
+    error: errorEndPoll,
+  } = useSelector((store) => store.pollEnd);
+
   useEffect(() => {
     if (successSingle) {
       const {
@@ -79,7 +87,7 @@ const Slug = () => {
   useEffect(() => {
     const slug = window.location.href.split("polls/")[1];
     dispatch(getSinglePollAction(slug));
-  }, [successPublishPoll]);
+  }, [successPublishPoll, successEndPoll]);
 
   useEffect(() => {
     if (userInfo) {
@@ -88,7 +96,14 @@ const Slug = () => {
   }, []);
 
   const pollPublishHandler = () => {
-    dispatch(publishPollAction(slug));
+    if (confirm("Do you really want to publish this poll?")) {
+      dispatch(publishPollAction(slug));
+    }
+  };
+  const pollEndHandler = () => {
+    if (confirm("Do you really want to end this poll?")) {
+      dispatch(endPollAction(slug));
+    }
   };
 
   return (
@@ -130,6 +145,11 @@ const Slug = () => {
                     onClick={pollPublishHandler}
                   >
                     Publish
+                  </Button>
+                )}
+                {userInfo?.username === creator?.username && !draft && (
+                  <Button size="sm" variant="danger" onClick={pollEndHandler}>
+                    End poll
                   </Button>
                 )}
               </Card.Text>
