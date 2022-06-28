@@ -66,10 +66,10 @@ const Layout = ({ children }) => {
               )}
 
               {userInfo && (
-                <ButtonGroup style={{ maxWidth: "12rem" }}>
+                <ButtonGroup style={{ maxWidth: "20rem" }}>
                   <Link href="/dashboard" passHref>
                     <Nav.Link className="btn btn-secondary text-white">
-                      Dashboard
+                      Dashboard - {userInfo?.username}
                     </Nav.Link>
                   </Link>
 

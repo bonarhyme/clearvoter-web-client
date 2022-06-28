@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Card, Col, Container, Row, Button } from "react-bootstrap";
@@ -6,13 +6,29 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
-import { getSinglePollAction } from "../../redux/actions/vote.actions";
+import {
+  getSinglePollAction,
+  publishPollAction,
+} from "../../redux/actions/vote.actions";
 
 import VoteInPoll from "../../components/VoteInPoll";
 
 const Slug = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const [userInfo, setUserInfo] = useState({});
+  const [title, setTitle] = useState("");
+  const [slug, setSlug] = useState("");
+  const [creator, setCreator] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
+  const [expiration, setExpiration] = useState("");
+  const [endVoting, setEndVoting] = useState(null);
+  const [allowVpn, setAllowVpn] = useState(null);
+  const [draft, setDraft] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [parties, setParties] = useState(null);
+  const [targetLocations, setTargetLocations] = useState(null);
 
   const {
     loading: loadingSingle,
@@ -21,10 +37,59 @@ const Slug = () => {
     error: errorSingle,
   } = useSelector((store) => store.pollGetSingle);
 
+  const { userInfo: userInfoReducer } = useSelector((state) => state.loginUser);
+
+  const {
+    loading: loadingPublishPoll,
+    success: successPublishPoll,
+    pollInfo: pollInfoPublishPoll,
+    error: errorPublishPoll,
+  } = useSelector((store) => store.pollPublish);
+
+  useEffect(() => {
+    if (successSingle) {
+      const {
+        title,
+        creator,
+        createdAt,
+        expiration,
+        endVoting,
+        allowVpn,
+        draft,
+        description,
+        parties,
+        targetLocations,
+        slug,
+      } = pollInfoSingle?.data;
+
+      setAllowVpn(allowVpn);
+      setCreatedAt(createdAt);
+      setCreator(creator);
+      setDescription(description);
+      setDraft(draft);
+      setEndVoting(endVoting);
+      setExpiration(expiration);
+      setParties(parties);
+      setTargetLocations(targetLocations);
+      setTitle(title);
+      setSlug(slug);
+    }
+  }, [successSingle]);
+
   useEffect(() => {
     const slug = window.location.href.split("polls/")[1];
     dispatch(getSinglePollAction(slug));
+  }, [successPublishPoll]);
+
+  useEffect(() => {
+    if (userInfo) {
+      setUserInfo(userInfoReducer);
+    }
   }, []);
+
+  const pollPublishHandler = () => {
+    dispatch(publishPollAction(slug));
+  };
 
   return (
     <div className="pb-5 pt-3">
@@ -40,22 +105,49 @@ const Slug = () => {
         {successSingle && (
           <Card>
             <Card.Header>
-              <Card.Title>{pollInfoSingle?.data?.title}</Card.Title>
+              <Card.Title>{title}</Card.Title>
               <Card.Text>
-                Creator: {pollInfoSingle?.data?.creator?.username} | Published:{" "}
-                {new Date(pollInfoSingle?.data?.createdAt).toLocaleDateString()}{" "}
-                | expires:{" "}
-                {new Date(pollInfoSingle?.data?.expiration).toLocaleString()} |
-                Status: {pollInfoSingle?.data?.endVoting ? "Closed" : "Active"}{" "}
-                | Vpn:{" "}
-                {pollInfoSingle?.data?.allowVpn ? "Allowed" : "Not allowed"}
+                Creator: {creator?.username} | Published:{" "}
+                {new Date(createdAt).toLocaleDateString()} | expires:{" "}
+                {new Date(expiration).toLocaleString()} | Status:{" "}
+                {endVoting ? "Closed" : "Active"} | Vpn:{" "}
+                {allowVpn ? "Allowed" : "Not allowed"}
+              </Card.Text>
+              {loadingPublishPoll && <Loader color="black" />}
+              {errorPublishPoll && (
+                <Message variant="danger">{errorPublishPoll}</Message>
+              )}
+              {successPublishPoll && (
+                <Message variant="success">
+                  {pollInfoPublishPoll?.message}
+                </Message>
+              )}
+              <Card.Text>
+                {userInfo?.username === creator?.username && draft && (
+                  <Button
+                    size="sm"
+                    variant="success"
+                    onClick={pollPublishHandler}
+                  >
+                    Publish
+                  </Button>
+                )}
+              </Card.Text>
+              <Card.Text>
+                Poll Link:{" "}
+                <b>
+                  {" "}
+                  {!draft &&
+                    typeof window !== "undefined" &&
+                    window.location.href}
+                </b>
               </Card.Text>
             </Card.Header>
             <Card.Body>
-              <Card.Text>{pollInfoSingle?.data?.description}</Card.Text>
+              <Card.Text>{description}</Card.Text>
               <Card.Text>
                 <Row>
-                  {pollInfoSingle?.data?.parties.map((party, index) => {
+                  {parties?.map((party, index) => {
                     return (
                       <Col xs={12} sm={6} md={4}>
                         <VoteInPoll
@@ -72,7 +164,7 @@ const Slug = () => {
             <Card.Footer>
               <Card.Text>
                 Allowed Locations:
-                {pollInfoSingle?.data?.targetLocations?.map((location) => (
+                {targetLocations?.map((location) => (
                   <span
                     className="mx-1"
                     style={{ textTransform: "capitalize" }}

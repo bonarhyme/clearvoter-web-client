@@ -66,7 +66,13 @@ export const loginAction = (username, password) => async (dispatch) => {
     );
 
     if (typeof window !== "undefined") {
-      localStorage.setItem("userInfo", JSON.stringify(data?.data?.token));
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify({
+          token: data?.data?.token,
+          username: data?.data?.username,
+        })
+      );
     }
     dispatch({
       type: USER_LOGIN_SUCCESS,
