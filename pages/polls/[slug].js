@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { Card, Col, Container, Row, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { FaInfoCircle } from "react-icons/fa";
 
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
@@ -152,6 +153,12 @@ const Slug = () => {
                 </Message>
               )}
               <Card.Text>
+                {parties?.length < 2 && (
+                  <Message variant="info">
+                    <FaInfoCircle size={30} /> Please Add atleast two poll
+                    parties in order to publish poll
+                  </Message>
+                )}
                 {parties?.length >= 2 &&
                   userInfo?.username === creator?.username &&
                   draft && (

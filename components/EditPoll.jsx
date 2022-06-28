@@ -16,7 +16,7 @@ const EditPoll = () => {
             <Card className="p-2">
               <FaTimes
                 size={30}
-                color="red"
+                color="#dc3545"
                 onClick={() => setShowPartyForm(false)}
                 style={{
                   cursor: "pointer",
@@ -43,7 +43,7 @@ const EditPoll = () => {
             <Card className="p-2">
               <FaTimes
                 size={30}
-                color="red"
+                color="#dc3545"
                 onClick={() => setShowLocationForm(false)}
                 style={{
                   cursor: "pointer",
