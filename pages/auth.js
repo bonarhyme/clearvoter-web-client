@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import Link from "next/link";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { register as registerAction } from "../redux/actions/user.actions";
+import { registerAction, loginAction } from "../redux/actions/user.actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const Auth = () => {
@@ -21,6 +21,12 @@ const Auth = () => {
     userInfo: userInfoReg,
     error: errorReg,
   } = useSelector((store) => store.registerUser);
+  const {
+    loading: loadingLogin,
+    success: successLogin,
+    userInfo: userInfoLogin,
+    error: errorLogin,
+  } = useSelector((store) => store.loginUser);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -33,8 +39,39 @@ const Auth = () => {
   };
   const handleLogin = (e) => {
     e.preventDefault();
-    // dispatch(login(username, password));
+    dispatch(loginAction(username, password));
   };
+
+  useEffect(() => {
+    let timeOut;
+    if (successReg || userInfoReg?.message) {
+      timeOut = setTimeout(() => {
+        setRegisterScreen(false);
+        setEmail("");
+        setConfirmPassword("");
+        setPassword("");
+      }, 5000);
+    }
+
+    return () => clearTimeout(timeOut);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [successReg]);
+
+  useEffect(() => {
+    let timeOut;
+    if (successLogin) {
+      setUsername("");
+      setPassword("");
+
+      timeOut = setTimeout(() => {
+        if (typeof window !== "undefined") {
+          document.location.href = "/";
+        }
+      }, 3000);
+    }
+    return () => clearTimeout(timeOut);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [successLogin]);
 
   return (
     <div>
@@ -47,11 +84,21 @@ const Auth = () => {
           style={{ backgroundColor: "#eee" }}
           onSubmit={registerScreen ? handleRegister : handleLogin}
         >
+          {loadingLogin && <Loader color="black" />}
+          {loadingReg && <Loader color="black" />}
           {registerScreen && errorReg && (
             <Message variant="danger">{errorReg}</Message>
           )}
 
-          {registerScreen && loadingReg && <Loader />}
+          {!registerScreen && errorLogin && (
+            <Message variant="danger">{errorLogin}</Message>
+          )}
+          {registerScreen && successReg && (
+            <Message variant="success">{userInfoReg.message}</Message>
+          )}
+          {!registerScreen && successLogin && (
+            <Message variant="success">{userInfoLogin.message}</Message>
+          )}
           {registerScreen && (
             <Form.Group controlId="formBasicEmail" className="my-3">
               <Form.Label>Email address</Form.Label>
@@ -60,6 +107,7 @@ const Auth = () => {
                 placeholder="e.g name@example.com"
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                value={email}
               />
             </Form.Group>
           )}
@@ -70,6 +118,7 @@ const Auth = () => {
               placeholder="e.g John123"
               onChange={(e) => setUsername(e.target.value)}
               required
+              value={username}
             />
           </Form.Group>
           <Form.Group controlId="formBasicPassword" className="my-3">
@@ -82,6 +131,7 @@ const Auth = () => {
                 setPasswordMessage("");
               }}
               required
+              value={password}
             />
           </Form.Group>
 
@@ -100,6 +150,8 @@ const Auth = () => {
                     setConfirmPassword(e.target.value);
                     setPasswordMessage("");
                   }}
+                  required
+                  value={confirmPassword}
                 />
               </Form.Group>
             </>

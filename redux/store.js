@@ -8,11 +8,12 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import {
   userRegisterReducer,
-  // userLoginReducer,
+  userLoginReducer,
 } from "./reducers/user.reducers";
 
 const reducer = combineReducers({
   registerUser: userRegisterReducer,
+  loginUser: userLoginReducer,
 });
 
 // Local storage matters
@@ -25,7 +26,7 @@ if (typeof window !== "undefined") {
 
 // initial state
 const initialState = {
-  userLogin: {
+  loginUser: {
     userInfo: userInfoFromStorage,
   },
 };
