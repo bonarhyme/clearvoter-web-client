@@ -22,6 +22,9 @@ import {
   GET_ALL_ASSOCIATED_REQUEST,
   GET_ALL_ASSOCIATED_SUCCESS,
   GET_ALL_ASSOCIATED_FAIL,
+  ADD_POLL_PARTY_REQUEST,
+  ADD_POLL_PARTY_SUCCESS,
+  ADD_POLL_PARTY_FAIL,
 } from "../constants/vote.constants";
 
 export const createPollAction =
@@ -265,3 +268,44 @@ export const getAllAssociatedPollsAction = (username) => async (dispatch) => {
     });
   }
 };
+
+export const addPollPartyAction =
+  (slug, name, description) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ADD_POLL_PARTY_REQUEST,
+      });
+
+      const {
+        loginUser: { userInfo },
+      } = getState();
+
+      let config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo?.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `${SERVER_URL}/api/polls/add-party/${slug}`,
+        {
+          name,
+          description,
+        },
+        config
+      );
+      dispatch({
+        type: ADD_POLL_PARTY_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ADD_POLL_PARTY_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

@@ -13,6 +13,7 @@ import {
 } from "../../redux/actions/vote.actions";
 
 import VoteInPoll from "../../components/VoteInPoll";
+import EditPoll from "../../components/EditPoll";
 
 const Slug = () => {
   const dispatch = useDispatch();
@@ -54,6 +55,10 @@ const Slug = () => {
     error: errorEndPoll,
   } = useSelector((store) => store.pollEnd);
 
+  const { success: successAddPollParty } = useSelector(
+    (store) => store.pollPartyAdd
+  );
+
   useEffect(() => {
     if (successSingle) {
       const {
@@ -87,7 +92,7 @@ const Slug = () => {
   useEffect(() => {
     const slug = window.location.href.split("polls/")[1];
     dispatch(getSinglePollAction(slug));
-  }, [successPublishPoll, successEndPoll]);
+  }, [successPublishPoll, successEndPoll, successAddPollParty]);
 
   useEffect(() => {
     if (userInfo) {
@@ -109,11 +114,12 @@ const Slug = () => {
   return (
     <div className="pb-5 pt-3">
       <Head>
-        <title> </title>
+        <title>{title}</title>
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container>
+        {userInfo?.username === creator?.username && <EditPoll />}
         {loadingSingle && <Loader color="black" />}
 
         {errorSingle && <Message variant="danger">{errorSingle}</Message>}
@@ -138,7 +144,7 @@ const Slug = () => {
                 </Message>
               )}
               <Card.Text>
-                {parties?.length > 0 &&
+                {parties?.length >= 2 &&
                   userInfo?.username === creator?.username &&
                   draft && (
                     <Button
@@ -150,6 +156,7 @@ const Slug = () => {
                       Publish
                     </Button>
                   )}
+                {loadingEndPoll && <Loader color="black" />}
                 {errorEndPoll && (
                   <Message variant="danger">{errorEndPoll}</Message>
                 )}
@@ -158,7 +165,7 @@ const Slug = () => {
                     {pollInfoEndPoll?.message}
                   </Message>
                 )}
-                {parties?.length > 0 &&
+                {parties?.length >= 2 &&
                   userInfo?.username === creator?.username &&
                   !endVoting && (
                     <Button size="sm" variant="danger" onClick={pollEndHandler}>

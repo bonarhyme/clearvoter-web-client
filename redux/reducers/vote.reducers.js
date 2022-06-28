@@ -1,5 +1,9 @@
 import { USER_LOGOUT } from "../constants/user.constants";
 import {
+  ADD_POLL_PARTY_FAIL,
+  ADD_POLL_PARTY_REQUEST,
+  ADD_POLL_PARTY_RESET,
+  ADD_POLL_PARTY_SUCCESS,
   CREATE_POLL_FAIL,
   CREATE_POLL_REQUEST,
   CREATE_POLL_RESET,
@@ -124,6 +128,23 @@ export const getAllAssociatedPollsReducer = (state = {}, action) => {
       return { loading: false, success: true, pollInfo: action.payload };
     case GET_ALL_ASSOCIATED_FAIL:
       return { loading: false, success: false, error: action.payload };
+    case USER_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const addPollPartyReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADD_POLL_PARTY_REQUEST:
+      return { loading: true };
+    case ADD_POLL_PARTY_SUCCESS:
+      return { loading: false, success: true, pollInfo: action.payload };
+    case ADD_POLL_PARTY_FAIL:
+      return { loading: false, success: false, error: action.payload };
+    case ADD_POLL_PARTY_RESET:
+      return {};
     case USER_LOGOUT:
       return {};
     default:

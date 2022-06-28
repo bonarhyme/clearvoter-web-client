@@ -39,23 +39,25 @@ const VoteInPoll = ({ pollInfoSingle, party, index }) => {
           <Message variant="danger">{pollInfoVoteInPoll?.message}</Message>
         )}
 
-        <Card.Text>
-          {currentComponent && loadingVoteInPoll && (
-            <Loader color="black" size="30" />
-          )}
-          <Button
-            size="sm"
-            variant="primary"
-            type="button"
-            disabled={loadingVoteInPoll}
-            onClick={() => {
-              setCurrentComponent(true);
-              voteInPollHandler(pollInfoSingle?.data?.slug, party?._id);
-            }}
-          >
-            Vote{" "}
-          </Button>
-        </Card.Text>
+        {pollInfoSingle?.data?.parties.length >= 2 && (
+          <Card.Text>
+            {currentComponent && loadingVoteInPoll && (
+              <Loader color="black" size="30" />
+            )}
+            <Button
+              size="sm"
+              variant="primary"
+              type="button"
+              disabled={loadingVoteInPoll}
+              onClick={() => {
+                setCurrentComponent(true);
+                voteInPollHandler(pollInfoSingle?.data?.slug, party?._id);
+              }}
+            >
+              Vote{" "}
+            </Button>
+          </Card.Text>
+        )}
       </Card.Body>
     </Card>
   );
