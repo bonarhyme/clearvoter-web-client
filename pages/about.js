@@ -41,17 +41,31 @@ const About = () => {
           </p>
           <p>
             Clear voter was created by{" "}
-            <a href="https://bonarhyme.com" target="_blank" rel="noopener">
-              <strong>Onuorah Bonaventure Chukwudi</strong>
-            </a>{" "}
-            and contributions are welcome. To contribute visit{" "}
             <a
-              href="https://github.com/bonarhyme/clearvoter"
+              href="https://bonarhyme.com"
               target="_blank"
               rel="noopener"
               className="decorate"
             >
-              source code
+              <strong>Onuorah Bonaventure Chukwudi</strong>
+            </a>{" "}
+            and contributions are welcome. To contribute visit{" "}
+            <a
+              href="https://github.com/bonarhyme/clearvoter-server"
+              target="_blank"
+              rel="noopener"
+              className="decorate"
+            >
+              server source code
+            </a>{" "}
+            and{" "}
+            <a
+              href="https://github.com/bonarhyme/clearvoter-web-client"
+              target="_blank"
+              rel="noopener"
+              className="decorate"
+            >
+              web client source code
             </a>
           </p>
         </main>

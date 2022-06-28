@@ -88,7 +88,9 @@ const Layout = ({ children }) => {
           </Navbar.Collapse>
         </Navbar>
       </Container>
-      <div className="mt-5 pt-5">{children}</div>
+      <div className="mt-5 pt-5" style={{ minHeight: "calc(100vh - 10rem)" }}>
+        {children}
+      </div>
       <footer style={{ backgroundColor: "#ddd" }} className="py-5">
         <Container>
           <p>
@@ -109,12 +111,21 @@ const Layout = ({ children }) => {
             </a>{" "}
             June 2022 Hackathon. Contributions are welcome. To contribute visit{" "}
             <a
-              href="https://github.com/bonarhyme/clearvoter"
+              href="https://github.com/bonarhyme/clearvoter-server"
               target="_blank"
               rel="noopener"
               className="decorate"
             >
-              source code
+              server source code
+            </a>{" "}
+            and{" "}
+            <a
+              href="https://github.com/bonarhyme/clearvoter-web-client"
+              target="_blank"
+              rel="noopener"
+              className="decorate"
+            >
+              web client source code
             </a>
           </p>
           <p className="text-center">
