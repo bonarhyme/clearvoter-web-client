@@ -8,6 +8,8 @@ import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 import { getSinglePollAction } from "../../redux/actions/vote.actions";
 
+import VoteInPoll from "../../components/VoteInPoll";
+
 const Slug = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -33,6 +35,7 @@ const Slug = () => {
       </Head>
       <Container>
         {loadingSingle && <Loader color="black" />}
+
         {errorSingle && <Message variant="danger">{errorSingle}</Message>}
         {successSingle && (
           <Card>
@@ -55,24 +58,11 @@ const Slug = () => {
                   {pollInfoSingle?.data?.parties.map((party, index) => {
                     return (
                       <Col xs={12} sm={6} md={4}>
-                        <Card>
-                          <Card.Header style={{ textTransform: "capitalize" }}>
-                            <b>
-                              {index + 1}. {party?.name}
-                            </b>
-                          </Card.Header>
-                          <Card.Body>
-                            <Card.Text>{party?.description}</Card.Text>
-                            <Card.Text>
-                              Vote Count: <b>{party?.voteCount}</b>
-                            </Card.Text>
-                            <Card.Text>
-                              <Button size="sm" variant="primary" type="button">
-                                Vote
-                              </Button>
-                            </Card.Text>
-                          </Card.Body>
-                        </Card>
+                        <VoteInPoll
+                          party={party}
+                          pollInfoSingle={pollInfoSingle}
+                          index={index}
+                        />
                       </Col>
                     );
                   })}

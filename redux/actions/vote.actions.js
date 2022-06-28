@@ -10,6 +10,9 @@ import {
   GET_SINGLE_POLL_REQUEST,
   GET_SINGLE_POLL_SUCCESS,
   GET_SINGLE_POLL_FAIL,
+  VOTE_IN_POLL_REQUEST,
+  VOTE_IN_POLL_SUCCESS,
+  VOTE_IN_POLL_FAIL,
 } from "../constants/vote.constants";
 
 export const createPollAction =
@@ -111,6 +114,37 @@ export const getSinglePollAction = (slug) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_SINGLE_POLL_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+export const voteInPollAction = (slug, selectionId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: VOTE_IN_POLL_REQUEST,
+    });
+
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.put(
+      `${SERVER_URL}/api/polls/vote/${slug}/${selectionId}`,
+      {},
+      config
+    );
+    dispatch({
+      type: VOTE_IN_POLL_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: VOTE_IN_POLL_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

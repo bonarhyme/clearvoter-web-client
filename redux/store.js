@@ -15,6 +15,7 @@ import {
   createPollReducer,
   getAllPollsReducer,
   getSinglePollReducer,
+  voteInPollReducer,
 } from "./reducers/vote.reducers";
 
 const reducer = combineReducers({
@@ -26,6 +27,7 @@ const reducer = combineReducers({
   pollCreate: createPollReducer,
   pollsGetAll: getAllPollsReducer,
   pollGetSingle: getSinglePollReducer,
+  pollVoteIn: voteInPollReducer,
 });
 
 // Local storage matters
