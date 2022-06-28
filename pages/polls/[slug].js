@@ -147,7 +147,15 @@ const Slug = () => {
                     Publish
                   </Button>
                 )}
-                {userInfo?.username === creator?.username && !draft && (
+                {errorEndPoll && (
+                  <Message variant="danger">{errorEndPoll}</Message>
+                )}
+                {successEndPoll && (
+                  <Message variant="success">
+                    {pollInfoEndPoll?.message}
+                  </Message>
+                )}
+                {userInfo?.username === creator?.username && !endVoting && (
                   <Button size="sm" variant="danger" onClick={pollEndHandler}>
                     End poll
                   </Button>

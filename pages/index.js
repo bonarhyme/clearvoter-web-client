@@ -39,46 +39,48 @@ export default function Home() {
             All polls
           </h1>
         </header>
-        <CardGroup>
-          {loadingAll && <Loader color="black" />}
-          {errorAll && <Message variant="danger">{errorAll}</Message>}
-          {successAll &&
-            pollInfoAll?.data.length > 0 &&
-            pollInfoAll?.data.map((poll) => {
-              const {
-                creator,
-                title,
-                description,
-                expiration,
-                slug,
-                createdAt,
-                _id,
-              } = poll;
-              return (
-                <Card key={_id}>
-                  <Card.Header>
-                    <Card.Title>{title}</Card.Title>
-                    <Card.Text>
-                      Creator: {creator?.username} | Published:{" "}
-                      {new Date(createdAt).toLocaleDateString()} | expires:{" "}
-                      {new Date(expiration).toLocaleString()}
-                    </Card.Text>
-                  </Card.Header>
-                  <Card.Body>
-                    <Card.Text>
-                      {description.slice(0, 255)}
-                      ...
-                    </Card.Text>
-                  </Card.Body>
-                  <Card.Footer>
-                    <Link href={`polls/${slug}`} passHref>
-                      <Card.Link className="decorate">View more</Card.Link>
-                    </Link>
-                  </Card.Footer>
-                </Card>
-              );
-            })}
-        </CardGroup>
+        <main>
+          <CardGroup>
+            {loadingAll && <Loader color="black" />}
+            {errorAll && <Message variant="danger">{errorAll}</Message>}
+            {successAll &&
+              pollInfoAll?.data.length > 0 &&
+              pollInfoAll?.data.map((poll) => {
+                const {
+                  creator,
+                  title,
+                  description,
+                  expiration,
+                  slug,
+                  createdAt,
+                  _id,
+                } = poll;
+                return (
+                  <Card key={_id}>
+                    <Card.Header>
+                      <Card.Title>{title}</Card.Title>
+                      <Card.Text>
+                        Creator: {creator?.username} | Published:{" "}
+                        {new Date(createdAt).toLocaleDateString()} | expires:{" "}
+                        {new Date(expiration).toLocaleString()}
+                      </Card.Text>
+                    </Card.Header>
+                    <Card.Body>
+                      <Card.Text>
+                        {description.slice(0, 255)}
+                        ...
+                      </Card.Text>
+                    </Card.Body>
+                    <Card.Footer>
+                      <Link href={`polls/${slug}`} passHref>
+                        <Card.Link className="decorate">View more</Card.Link>
+                      </Link>
+                    </Card.Footer>
+                  </Card>
+                );
+              })}
+          </CardGroup>
+        </main>
       </Container>
     </div>
   );

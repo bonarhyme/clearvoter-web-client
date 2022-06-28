@@ -2,6 +2,7 @@ import { USER_LOGOUT } from "../constants/user.constants";
 import {
   CREATE_POLL_FAIL,
   CREATE_POLL_REQUEST,
+  CREATE_POLL_RESET,
   CREATE_POLL_SUCCESS,
   END_POLL_FAIL,
   END_POLL_REQUEST,
@@ -28,6 +29,8 @@ export const createPollReducer = (state = {}, action) => {
       return { loading: false, success: true, pollInfo: action.payload };
     case CREATE_POLL_FAIL:
       return { loading: false, success: false, error: action.payload };
+    case CREATE_POLL_RESET:
+      return {};
     case USER_LOGOUT:
       return {};
     default:

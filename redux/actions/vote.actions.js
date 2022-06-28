@@ -29,13 +29,13 @@ export const createPollAction =
       });
 
       const {
-        userLogin: { userInfo },
+        loginUser: { userInfo },
       } = getState();
 
       let config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.token}`,
+          Authorization: `Bearer ${userInfo?.token}`,
         },
       };
 
