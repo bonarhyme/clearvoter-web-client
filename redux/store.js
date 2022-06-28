@@ -11,9 +11,19 @@ import {
   userLoginReducer,
 } from "./reducers/user.reducers";
 
+import {
+  createPollReducer,
+  getAllPollsReducer,
+} from "./reducers/vote.reducers";
+
 const reducer = combineReducers({
+  // Users
   registerUser: userRegisterReducer,
   loginUser: userLoginReducer,
+
+  // POLLS
+  pollCreate: createPollReducer,
+  pollsGetAll: getAllPollsReducer,
 });
 
 // Local storage matters

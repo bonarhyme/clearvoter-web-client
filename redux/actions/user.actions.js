@@ -5,6 +5,7 @@ import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
+  USER_LOGOUT,
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
@@ -80,4 +81,10 @@ export const loginAction = (username, password) => async (dispatch) => {
           : error?.message,
     });
   }
+};
+
+export const logout = () => (dispatch) => {
+  dispatch({ type: USER_LOGOUT });
+  localStorage.removeItem("userInfo");
+  document.location.href = "/auth";
 };

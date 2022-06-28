@@ -9,10 +9,11 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
+import { logout } from "../redux/actions/user.actions";
 
 const Layout = ({ children }) => {
-  // const { userInfo } = useSelector((state) => state.userLogin);
-  const userInfo = null;
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.loginUser);
 
   return (
     <>
@@ -63,7 +64,7 @@ const Layout = ({ children }) => {
 
                   <Button
                     size="sm"
-                    // onClick={() => dispatch(logout())}
+                    onClick={() => dispatch(logout())}
                     variant="danger"
                   >
                     Logout
