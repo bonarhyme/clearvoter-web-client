@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import CreatePoll from "../components/CreatePoll";
 import { FaTimes } from "react-icons/fa";
+import AssociatedPolls from "../components/AssociatedPolls";
 
 const Dashboard = () => {
   const [create, setCreate] = useState(false);
@@ -44,6 +45,10 @@ const Dashboard = () => {
               Create Poll
             </Button>
           )}
+
+          <Container className="py-5">
+            <AssociatedPolls />
+          </Container>
         </main>
       </Container>
     </div>

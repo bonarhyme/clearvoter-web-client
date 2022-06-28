@@ -19,6 +19,9 @@ import {
   END_POLL_REQUEST,
   END_POLL_SUCCESS,
   END_POLL_FAIL,
+  GET_ALL_ASSOCIATED_REQUEST,
+  GET_ALL_ASSOCIATED_SUCCESS,
+  GET_ALL_ASSOCIATED_FAIL,
 } from "../constants/vote.constants";
 
 export const createPollAction =
@@ -223,6 +226,38 @@ export const endPollAction = (slug) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: END_POLL_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getAllAssociatedPollsAction = (username) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_ALL_ASSOCIATED_REQUEST,
+    });
+
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.get(
+      `${SERVER_URL}/api/polls/view-polls/associated/${username}`,
+
+      config
+    );
+    dispatch({
+      type: GET_ALL_ASSOCIATED_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_ASSOCIATED_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

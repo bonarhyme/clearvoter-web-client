@@ -138,15 +138,18 @@ const Slug = () => {
                 </Message>
               )}
               <Card.Text>
-                {userInfo?.username === creator?.username && draft && (
-                  <Button
-                    size="sm"
-                    variant="success"
-                    onClick={pollPublishHandler}
-                  >
-                    Publish
-                  </Button>
-                )}
+                {parties?.length > 0 &&
+                  userInfo?.username === creator?.username &&
+                  draft && (
+                    <Button
+                      size="sm"
+                      variant="success"
+                      onClick={pollPublishHandler}
+                      className="mx-3"
+                    >
+                      Publish
+                    </Button>
+                  )}
                 {errorEndPoll && (
                   <Message variant="danger">{errorEndPoll}</Message>
                 )}
@@ -155,11 +158,13 @@ const Slug = () => {
                     {pollInfoEndPoll?.message}
                   </Message>
                 )}
-                {userInfo?.username === creator?.username && !endVoting && (
-                  <Button size="sm" variant="danger" onClick={pollEndHandler}>
-                    End poll
-                  </Button>
-                )}
+                {parties?.length > 0 &&
+                  userInfo?.username === creator?.username &&
+                  !endVoting && (
+                    <Button size="sm" variant="danger" onClick={pollEndHandler}>
+                      End poll
+                    </Button>
+                  )}
               </Card.Text>
               <Card.Text>
                 Poll Link:{" "}

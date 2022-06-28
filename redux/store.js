@@ -14,6 +14,7 @@ import {
 import {
   createPollReducer,
   endPollReducer,
+  getAllAssociatedPollsReducer,
   getAllPollsReducer,
   getSinglePollReducer,
   publishPollReducer,
@@ -32,6 +33,7 @@ const reducer = combineReducers({
   pollVoteIn: voteInPollReducer,
   pollPublish: publishPollReducer,
   pollEnd: endPollReducer,
+  pollsGetAllAssociated: getAllAssociatedPollsReducer,
 });
 
 // Local storage matters

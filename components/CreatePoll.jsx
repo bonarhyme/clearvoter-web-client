@@ -65,6 +65,7 @@ const CreatePoll = () => {
       {successCreatePoll && (
         <Message variant="success">{voteInfoCreatePoll?.message}</Message>
       )}
+      <h2 className="py-2">Create Poll</h2>
       <Form.Group controlId="formBasicTitle" className="my-3">
         <Form.Label>Title</Form.Label>
         <Form.Control
