@@ -1,5 +1,9 @@
 import { USER_LOGOUT } from "../constants/user.constants";
 import {
+  ADD_POLL_LOCATION_FAIL,
+  ADD_POLL_LOCATION_REQUEST,
+  ADD_POLL_LOCATION_RESET,
+  ADD_POLL_LOCATION_SUCCESS,
   ADD_POLL_PARTY_FAIL,
   ADD_POLL_PARTY_REQUEST,
   ADD_POLL_PARTY_RESET,
@@ -144,6 +148,23 @@ export const addPollPartyReducer = (state = {}, action) => {
     case ADD_POLL_PARTY_FAIL:
       return { loading: false, success: false, error: action.payload };
     case ADD_POLL_PARTY_RESET:
+      return {};
+    case USER_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const addPollLocationReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADD_POLL_LOCATION_REQUEST:
+      return { loading: true };
+    case ADD_POLL_LOCATION_SUCCESS:
+      return { loading: false, success: true, pollInfo: action.payload };
+    case ADD_POLL_LOCATION_FAIL:
+      return { loading: false, success: false, error: action.payload };
+    case ADD_POLL_LOCATION_RESET:
       return {};
     case USER_LOGOUT:
       return {};

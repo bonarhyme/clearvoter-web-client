@@ -25,6 +25,9 @@ import {
   ADD_POLL_PARTY_REQUEST,
   ADD_POLL_PARTY_SUCCESS,
   ADD_POLL_PARTY_FAIL,
+  ADD_POLL_LOCATION_REQUEST,
+  ADD_POLL_LOCATION_SUCCESS,
+  ADD_POLL_LOCATION_FAIL,
 } from "../constants/vote.constants";
 
 export const createPollAction =
@@ -302,6 +305,46 @@ export const addPollPartyAction =
     } catch (error) {
       dispatch({
         type: ADD_POLL_PARTY_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const addPollLocationAction =
+  (slug, location) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ADD_POLL_LOCATION_REQUEST,
+      });
+
+      const {
+        loginUser: { userInfo },
+      } = getState();
+
+      let config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo?.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `${SERVER_URL}/api/polls/add-location/${slug}`,
+        {
+          location,
+        },
+        config
+      );
+      dispatch({
+        type: ADD_POLL_LOCATION_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ADD_POLL_LOCATION_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

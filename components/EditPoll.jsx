@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Card, Row, Col } from "react-bootstrap";
 import { FaTimes } from "react-icons/fa";
+import AddPollLocation from "./AddPollLocation";
 import AddPollParty from "./AddPollParty";
 
 const EditPoll = () => {
@@ -52,10 +53,14 @@ const EditPoll = () => {
                 }}
                 title="close location form"
               />
-              <div>The other one</div>
+              <AddPollLocation />
             </Card>
           ) : (
-            <Button size="lg" variant="secondary">
+            <Button
+              size="lg"
+              variant="secondary"
+              onClick={() => setShowLocationForm(true)}
+            >
               Add Target Location
             </Button>
           )}

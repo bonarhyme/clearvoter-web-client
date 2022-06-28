@@ -58,6 +58,9 @@ const Slug = () => {
   const { success: successAddPollParty } = useSelector(
     (store) => store.pollPartyAdd
   );
+  const { success: successAddPollLocation } = useSelector(
+    (store) => store.pollLocationAdd
+  );
 
   useEffect(() => {
     if (successSingle) {
@@ -92,7 +95,12 @@ const Slug = () => {
   useEffect(() => {
     const slug = window.location.href.split("polls/")[1];
     dispatch(getSinglePollAction(slug));
-  }, [successPublishPoll, successEndPoll, successAddPollParty]);
+  }, [
+    successPublishPoll,
+    successEndPoll,
+    successAddPollParty,
+    successAddPollLocation,
+  ]);
 
   useEffect(() => {
     if (userInfo) {
