@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllAssociatedPollsAction } from "../redux/actions/vote.actions";
+import Loader from "./Loader";
 import Message from "./Message";
 
 const AssociatedPolls = () => {
   const dispatch = useDispatch();
-  const [userInfo, setUserInfo] = useState({});
-  const { userInfo: userInfoReducer } = useSelector((state) => state.loginUser);
+  const { userInfo } = useSelector((state) => state.loginUser);
 
   const {
     loading: loadingAssociatedPoll,
@@ -19,12 +19,6 @@ const AssociatedPolls = () => {
 
   useEffect(() => {
     if (userInfo) {
-      setUserInfo(userInfoReducer);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (userInfo) {
       dispatch(getAllAssociatedPollsAction(userInfo?.username));
     }
   }, [userInfo]);
@@ -32,6 +26,7 @@ const AssociatedPolls = () => {
   return (
     <section>
       <h2>Your Polls</h2>
+      {loadingAssociatedPoll && <Loader color="black" />}
       {voteInfoAssociatedPoll?.data.length > 0 ? (
         <Table striped bordered responsive>
           <thead>
@@ -56,7 +51,11 @@ const AssociatedPolls = () => {
           </tbody>
         </Table>
       ) : (
-        <Message variant="danger">{errorAssociatedPoll}</Message>
+        <>
+          {errorAssociatedPoll && (
+            <Message variant="danger">{errorAssociatedPoll}</Message>
+          )}
+        </>
       )}
     </section>
   );
