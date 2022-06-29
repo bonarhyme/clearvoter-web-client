@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { Card, CardGroup, Container } from "react-bootstrap";
+import { Card, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import Loader from "../components/Loader";
@@ -40,7 +40,7 @@ export default function Home() {
           </h1>
         </header>
         <main>
-          <CardGroup>
+          <>
             {loadingAll && <Loader color="black" />}
             {errorAll && <Message variant="danger">{errorAll}</Message>}
             {successAll &&
@@ -56,13 +56,15 @@ export default function Home() {
                   _id,
                 } = poll;
                 return (
-                  <Card key={_id}>
+                  <Card key={_id} className="mb-5">
                     <Card.Header>
                       <Card.Title>{title}</Card.Title>
                       <Card.Text>
-                        Creator: {creator?.username} | Published:{" "}
-                        {new Date(createdAt).toLocaleDateString()} | expires:{" "}
-                        {new Date(expiration).toLocaleString()}
+                        <small>
+                          Creator: {creator?.username} | Published:{" "}
+                          {new Date(createdAt).toLocaleDateString()} | expires:{" "}
+                          {new Date(expiration).toLocaleString()}
+                        </small>
                       </Card.Text>
                     </Card.Header>
                     <Card.Body>
@@ -79,7 +81,7 @@ export default function Home() {
                   </Card>
                 );
               })}
-          </CardGroup>
+          </>
         </main>
       </Container>
     </div>
