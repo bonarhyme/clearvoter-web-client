@@ -200,20 +200,21 @@ const Slug = () => {
             </Card.Header>
             <Card.Body>
               <Card.Text>{description}</Card.Text>
-              <Card.Text>
+              <>
                 <Row>
                   {parties?.map((party, index) => {
                     return (
-                      <Col xs={12} sm={6} md={4} index={index}>
+                      <Col xs={12} sm={6} md={4} key={index}>
                         <VoteInPoll
                           party={party}
                           pollInfoSingle={pollInfoSingle}
+                          index={index}
                         />
                       </Col>
                     );
                   })}
                 </Row>
-              </Card.Text>
+              </>
             </Card.Body>
             <Card.Footer>
               <Card.Text>
