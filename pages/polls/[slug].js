@@ -204,11 +204,10 @@ const Slug = () => {
                 <Row>
                   {parties?.map((party, index) => {
                     return (
-                      <Col xs={12} sm={6} md={4}>
+                      <Col xs={12} sm={6} md={4} index={index}>
                         <VoteInPoll
                           party={party}
                           pollInfoSingle={pollInfoSingle}
-                          index={index}
                         />
                       </Col>
                     );
@@ -219,15 +218,16 @@ const Slug = () => {
             <Card.Footer>
               <Card.Text>
                 Allowed Locations:
-                {targetLocations?.map((location) => (
-                  <span
-                    className="mx-1"
-                    style={{ textTransform: "capitalize" }}
-                    key={location}
-                  >
-                    {location?.location},
-                  </span>
-                ))}
+                {targetLocations?.length > 0 &&
+                  targetLocations?.map((location, index) => (
+                    <span
+                      className="mx-1"
+                      style={{ textTransform: "capitalize" }}
+                      key={index}
+                    >
+                      {location?.location},
+                    </span>
+                  ))}
               </Card.Text>
             </Card.Footer>
           </Card>

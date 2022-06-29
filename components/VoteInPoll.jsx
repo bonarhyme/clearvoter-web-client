@@ -36,7 +36,7 @@ const VoteInPoll = ({ pollInfoSingle, party, index }) => {
           <Message variant="danger">{errorVoteInPoll}</Message>
         )}
         {currentComponent && successVoteInPoll && (
-          <Message variant="danger">{pollInfoVoteInPoll?.message}</Message>
+          <Message variant="success">{pollInfoVoteInPoll?.message}</Message>
         )}
 
         {pollInfoSingle?.data?.parties.length >= 2 && (
