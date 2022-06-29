@@ -66,9 +66,9 @@ export const createPollAction =
       dispatch({
         type: CREATE_POLL_FAIL,
         payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+          error?.response && error?.response?.data?.message
+            ? error?.response?.data?.message
+            : error?.message,
       });
     }
   };
@@ -98,9 +98,9 @@ export const getAllPollsAction = () => async (dispatch) => {
     dispatch({
       type: GET_ALL_POLLS_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+        error?.response && error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message,
     });
   }
 };
@@ -130,9 +130,9 @@ export const getSinglePollAction = (slug) => async (dispatch) => {
     dispatch({
       type: GET_SINGLE_POLL_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+        error?.response && error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message,
     });
   }
 };
@@ -161,9 +161,9 @@ export const voteInPollAction = (slug, selectionId) => async (dispatch) => {
     dispatch({
       type: VOTE_IN_POLL_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+        error?.response && error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message,
     });
   }
 };
@@ -197,9 +197,9 @@ export const publishPollAction = (slug) => async (dispatch, getState) => {
     dispatch({
       type: PUBLISH_POLL_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+        error?.response && error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message,
     });
   }
 };
@@ -233,9 +233,9 @@ export const endPollAction = (slug) => async (dispatch, getState) => {
     dispatch({
       type: END_POLL_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+        error?.response && error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message,
     });
   }
 };
@@ -265,9 +265,9 @@ export const getAllAssociatedPollsAction = (username) => async (dispatch) => {
     dispatch({
       type: GET_ALL_ASSOCIATED_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+        error?.response && error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message,
     });
   }
 };
@@ -306,9 +306,9 @@ export const addPollPartyAction =
       dispatch({
         type: ADD_POLL_PARTY_FAIL,
         payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+          error?.response && error?.response?.data?.message
+            ? error?.response?.data?.message
+            : error?.message,
       });
     }
   };
@@ -346,9 +346,9 @@ export const addPollLocationAction =
       dispatch({
         type: ADD_POLL_LOCATION_FAIL,
         payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+          error?.response && error?.response?.data?.message
+            ? error?.response?.data?.message
+            : error?.message,
       });
     }
   };
